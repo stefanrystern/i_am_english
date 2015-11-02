@@ -2,6 +2,8 @@ package main;
 
 import java.util.ArrayList;
 
+import dataStructure.Phrase;
+import dataStructure.Sentence;
 import textUtils.SmartSplit;
 import textUtils.TextFileReader;
 import textUtils.TextSplitter;
@@ -17,26 +19,9 @@ public class Launcher {
 
 		TextSplitter ts = new TextSplitter();
 		
-		ArrayList<String> splittedText = ts.splitIntoSentences(textFromFile);
+		ArrayList<Sentence> splittedText = ts.splitIntoSentences(textFromFile);
 		
-		SmartSplit ss = new SmartSplit();
-		ArrayList<ArrayList<String>> resultWordsOfSentences = new ArrayList<ArrayList<String>>();
-		
-		for(String sentence : splittedText){
-			resultWordsOfSentences.add(ss.splitSentenceToPhrasesSmart(sentence));
-		}
-		
-		System.out.println(resultWordsOfSentences);
-		
-		
-		ConceptnetParser cp = new ConceptnetParser();
-		
-		for(ArrayList<String> sentence : resultWordsOfSentences){
-			for(String word : sentence){
-				System.out.println(cp.identifyWord(word).toString());
-			}
-		}
-		
+		System.out.println(splittedText);
 	}
 
 }
