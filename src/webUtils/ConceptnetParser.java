@@ -6,19 +6,20 @@ public class ConceptnetParser {
 	
 	public Phrase identifyWord(String wordToIdentify){
 		UrlSource us = new UrlSource();
+		if (wordToIdentify.matches("[a-zA-Z]+")) {
 //		String lookUpUrl = "http://conceptnet5.media.mit.edu/web/c/en/" + wordToIdentify.toLowerCase();
-		String lookUpUrl = "http://dictionary.reference.com/browse/"+ wordToIdentify.toLowerCase()+"?s=t" ;
-		System.out.println(lookUpUrl);
-		String result = "";
-		try{
-			result = parseSource(us.getUrlSource(lookUpUrl));
-		} catch (Exception ex){
-			lookUpUrl = "https://en.wikipedia.org/wiki/"+wordToIdentify.toLowerCase();
-		}
-		result = parseResult(result);
-		
-		return new Phrase(wordToIdentify,result,lookUpUrl);
-		
+			String lookUpUrl = "http://dictionary.reference.com/browse/" + wordToIdentify.toLowerCase() + "?s=t";
+			String result = "";
+			try {
+				result = parseSource(us.getUrlSource(lookUpUrl));
+			} catch (Exception ex) {
+				result = "unknown_entity";
+				lookUpUrl = "https://en.wikipedia.org/wiki/" + wordToIdentify.toLowerCase();
+			}
+			result = parseResult(result);
+
+			return new Phrase(wordToIdentify, result, lookUpUrl);
+		} else return new Phrase(wordToIdentify, "not_word", "");
 	}
 	
 	private String parseSource(String sourceToParse){

@@ -22,7 +22,7 @@ public class SmartSplit {
 	private int nextBreakerIndex(String sentence){
 		int result=sentence.length();
 		
-		String[] breakers = {" ",".",","};
+		String[] breakers = {" ",".",",","'","\""};
 		
 		for(String breaker: breakers){
 			int breakersIndex = sentence.indexOf(breaker);
