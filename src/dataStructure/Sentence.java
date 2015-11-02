@@ -2,6 +2,7 @@ package dataStructure;
 
 import java.util.ArrayList;
 
+import textUtils.RDFGenerator;
 import textUtils.SmartSplit;
 import webUtils.ConceptnetParser;
 
@@ -21,7 +22,8 @@ public class Sentence {
 		for(String word : words){
 			phrases.add(cp.identifyWord(word));
 		}
-		
+
+		RDFGenerator.generateRDF(phrases);
 	}
 
 	@Override
