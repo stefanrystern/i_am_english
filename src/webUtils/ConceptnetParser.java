@@ -6,8 +6,10 @@ public class ConceptnetParser {
 	
 	public Phrase identifyWord(String wordToIdentify){
 		UrlSource us = new UrlSource();
-		String lookUpUrl = "http://conceptnet5.media.mit.edu/web/c/en/" + wordToIdentify.toLowerCase();
-		String result = parseSource(us.getUrlSource(lookUpUrl));	
+//		String lookUpUrl = "http://conceptnet5.media.mit.edu/web/c/en/" + wordToIdentify.toLowerCase();
+		String lookUpUrl = "http://dictionary.reference.com/browse/"+ wordToIdentify.toLowerCase()+"?s=t" ;
+		System.out.println(lookUpUrl);
+		String result = parseSource(us.getUrlSource(lookUpUrl));
 		result = parseResult(result);
 		
 		return new Phrase(wordToIdentify,result,lookUpUrl);
@@ -15,10 +17,15 @@ public class ConceptnetParser {
 	}
 	
 	private String parseSource(String sourceToParse){
-		if(sourceToParse.contains("No results found for"))return "No results found";
-		sourceToParse = sourceToParse.substring(sourceToParse.indexOf("<div class=\"paraphrase\">"));
-		sourceToParse = sourceToParse.substring(sourceToParse.indexOf("\n"),sourceToParse.indexOf("</div>")).trim();
-
+//		if(sourceToParse.contains("No results found for"))return "No results found";
+//		sourceToParse = sourceToParse.substring(sourceToParse.indexOf("<div class=\"paraphrase\">"));
+//		sourceToParse = sourceToParse.substring(sourceToParse.indexOf("\n"),sourceToParse.indexOf("</div>")).trim();
+		try {
+			sourceToParse = sourceToParse.substring(sourceToParse.indexOf("<div class=\"source-data\">"));
+			sourceToParse = sourceToParse.substring(sourceToParse.indexOf("<header class=\"luna-data-header\">"), sourceToParse.indexOf("</header>")).trim();
+		} catch (Exception ex){
+			return "No result found";
+		}
 		return removeTags(sourceToParse);
 	}
 	
