@@ -15,10 +15,8 @@ public class ConceptnetParser {
 	}
 	
 	private String parseSource(String sourceToParse){
-		if(sourceToParse.contains("No results found for"))return "No results found";
-		sourceToParse = sourceToParse.substring(sourceToParse.indexOf("<div class=\"paraphrase\">"));
-		sourceToParse = sourceToParse.substring(sourceToParse.indexOf("\n"),sourceToParse.indexOf("</div>")).trim();
-
+		if(sourceToParse.contains("No results found for"))return "";
+		sourceToParse=getRelevantData(sourceToParse);
 		return removeTags(sourceToParse);
 	}
 	
@@ -30,9 +28,19 @@ public class ConceptnetParser {
 	
 	private String parseResult(String resultOfLookUp){
 		if(resultOfLookUp.contains("is a")){
-			return resultOfLookUp.substring(resultOfLookUp.indexOf("is a"));
+			resultOfLookUp = resultOfLookUp.substring(resultOfLookUp.indexOf("is a"));
+			resultOfLookUp = resultOfLookUp.substring(5);
 		}	
 		return resultOfLookUp;
+	}
+	
+	private String getRelevantData(String dataToParse){
+		dataToParse = dataToParse.substring(dataToParse.indexOf("<div class=\"paraphrase\">"));
+		dataToParse = dataToParse.substring(dataToParse.indexOf("\n"),dataToParse.indexOf("</div>")).trim();
+		if(dataToParse.length()<1){
+			// paraphrase is empty on first concept
+		}
+		return dataToParse;
 	}
 
 }
