@@ -6,7 +6,7 @@ import dataStructure.Phrase;
 import dataStructure.Sentence;
 import textUtils.SmartSplit;
 import textUtils.TextFileReader;
-import textUtils.TextSplitter;
+import textUtils.SentenceSplitter;
 import webUtils.ConceptnetParser;
 
 
@@ -17,7 +17,7 @@ public class Launcher {
 		
 		String textFromFile = tfr.readTextFile("text_one.txt");
 
-		TextSplitter ts = new TextSplitter();
+		SentenceSplitter ts = new SentenceSplitter();
 		
 		ArrayList<Sentence> splittedText = ts.splitIntoSentences(textFromFile);
 		

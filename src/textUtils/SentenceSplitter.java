@@ -6,7 +6,7 @@ import java.util.Locale;
 
 import dataStructure.Sentence;
 
-public class TextSplitter {
+public class SentenceSplitter {
 	
 	public ArrayList<Sentence> splitIntoSentences(String textToSplit){
 		

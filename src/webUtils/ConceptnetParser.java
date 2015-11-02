@@ -15,7 +15,7 @@ public class ConceptnetParser {
 	}
 	
 	private String parseSource(String sourceToParse){
-		if(sourceToParse.contains("No results found for"))return "";
+		if(sourceToParse.contains("No results found for"))return "No result";
 		sourceToParse=getRelevantData(sourceToParse);
 		return removeTags(sourceToParse);
 	}
