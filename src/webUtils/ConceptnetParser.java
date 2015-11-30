@@ -7,7 +7,7 @@ public class ConceptnetParser {
 	public Phrase identifyWord(String wordToIdentify){
 		UrlSource us = new UrlSource();
 		if (wordToIdentify.matches("[a-zA-Z]+")) {
-//		String lookUpUrl = "http://conceptnet5.media.mit.edu/web/c/en/" + wordToIdentify.toLowerCase();
+		//String lookUpUrl = "http://conceptnet5.media.mit.edu/web/c/en/" + wordToIdentify.toLowerCase();
 			String lookUpUrl = "http://dictionary.reference.com/browse/" + wordToIdentify.toLowerCase() + "?s=t";
 			String result = "";
 			try {

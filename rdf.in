@@ -1,0 +1,73 @@
+% clear automatic strategy selection
+clear(auto).
+
+% use capital letters (A,X,T,...) as vars
+set(prolog_style_variables).
+
+% select the search strategy
+set(hyper_res). % an alternative is to use set(binary_res).
+set(factor).
+
+% select sensible amount of output
+clear(print_given). % remove to see search process milestones
+clear(print_kept).  % do not print out generated and kept clauses.
+assign(stats_level, 0).
+
+% just make it stop after N secs
+assign(max_seconds, 10).
+
+list(sos).
+
+% example data
+
+ rdf("http://en.wikipedia.org/wiki/Barack_Obama",
+      "id:type",
+      "http://conceptnet5.media.mit.edu/web/c/en/person").
+
+rdf("http://dictionary.reference.com/browse/kenneth?s=t", "attribute=property", "http://dictionary.reference.com/browse/cleaned?s=t").
+rdf("http://dictionary.reference.com/browse/he?s=t", "attribute=property", "http://dictionary.reference.com/browse/emptied?s=t").
+rdf("http://dictionary.reference.com/browse/he?s=t", "attribute=action", "http://dictionary.reference.com/browse/washed?s=t").
+rdf("http://dictionary.reference.com/browse/the?s=t", "attribute=property", "http://dictionary.reference.com/browse/dirty?s=t").
+rdf("http://dictionary.reference.com/browse/he?s=t", "attribute=action", "http://dictionary.reference.com/browse/looked?s=t").
+rdf("http://dictionary.reference.com/browse/the?s=t", "attribute=action", "http://dictionary.reference.com/browse/sink?s=t").
+rdf("http://dictionary.reference.com/browse/bathtub?s=t", "attribute=action", "http://dictionary.reference.com/browse/were?s=t").
+rdf("http://dictionary.reference.com/browse/bathtub?s=t", "attribute=property", "http://dictionary.reference.com/browse/dirty?s=t").
+rdf("http://dictionary.reference.com/browse/he?s=t", "attribute=property", "http://dictionary.reference.com/browse/scrubbed?s=t").
+rdf("http://dictionary.reference.com/browse/the?s=t", "attribute=action", "http://dictionary.reference.com/browse/sink?s=t").
+rdf("http://dictionary.reference.com/browse/he?s=t", "attribute=action", "http://dictionary.reference.com/browse/looked?s=t").
+rdf("http://dictionary.reference.com/browse/he?s=t", "attribute=property", "http://dictionary.reference.com/browse/picked?s=t").
+rdf("http://dictionary.reference.com/browse/he?s=t", "attribute=action", "http://dictionary.reference.com/browse/put?s=t").
+      
+% some simple taxonomy rules of the form A->B i.e. -A | B in clause form.
+
+-rdf(X,"id:type",
+    "http://conceptnet5.media.mit.edu/web/c/en/person") |
+ rdf(X,"id:type",
+    "http://conceptnet5.media.mit.edu/web/c/en/animal").
+  
+ -rdf(X,"id:type",
+    "http://conceptnet5.media.mit.edu/web/c/en/animal") |
+ rdf(X,"id:type",
+    "mortal").	  
+    
+ -rdf(X,"id:type",
+    "http://conceptnet5.media.mit.edu/web/c/en/person") |
+  rdf(X,"id:CapableOf",
+    "id:eat").
+
+
+  -rdf(X,"attribute=property", "http://dictionary.reference.com/browse/cleaned?s=t") |
+  rdf(X,"attribute=property", "http://dictionary.reference.com/browse/emptied?s=t").
+
+  -rdf(X,"attribute=property", "http://dictionary.reference.com/browse/emptied?s=t") |
+  rdf(X,"attribute=action", "http://dictionary.reference.com/browse/washed?s=t").
+
+  -rdf(X,"attribute=action", "http://dictionary.reference.com/browse/washed?s=t") |
+  rdf(X,"attribute=property", "http://dictionary.reference.com/browse/scrubbed?s=t").
+
+% our question (negated)
+
+
+-rdf("http://dictionary.reference.com/browse/kenneth?s=t", "attribute=property","http://dictionary.reference.com/browse/scrubbed?s=t").
+
+end_of_list.
